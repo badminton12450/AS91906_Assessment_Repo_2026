@@ -13,7 +13,7 @@ class Task:
         """Convert task to file format"""
         return f"{self.name}|{self.priority}|{self.due_date}|{self.completed}"
 
-    @staticmethod
+    
     def from_file(line):
         """Create task from file line"""
         name, priority, due_date, completed = line.strip().split("|")
@@ -28,7 +28,7 @@ class Task:
         return task
 
 
-# ---------------- FUNCTIONS , these are the functions that i used for this task manager.
+#  FUNCTIONS , these are the functions that i used for this task manager.
 def add_task(task_list):
     """Add a new task"""
 
@@ -129,7 +129,7 @@ def complete_task(task_list):
         print("Enter a number only")
 
 
-# ---------------- MAIN MENU ----------------
+#// This is the Main menu
 
 def main():
 
