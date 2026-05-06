@@ -1,43 +1,35 @@
 class Task:
+    #// Each class will have a due date, priority, Name and cetria
     def __init__(self, name, priority, due_date):
-        self.name = name
-        self.priority = priority
-        self.due_date = due_date
-        self.completed = False
+        self.name = name  #// This stores the tasks name
+        self.priority = priority #// this stores the level of how important your work, homework, things are. EG, High, Medium, Low
+        self.due_date = due_date #// This stores the due date
+        self.completed = False #// this is efault which isn't completed. 
 
     def mark_completed(self):
-        """Mark task as completed"""
         self.completed = True
+        #//After this is goign to change the Status to now completed
 
     def to_file(self):
-        """Convert task to file format"""
         return f"{self.name}|{self.priority}|{self.due_date}|{self.completed}"
 
-    
+   
     def from_file(line):
-        """Create task from file line"""
         name, priority, due_date, completed = line.strip().split("|")
 
         task = Task(name, priority, due_date)
-
-        if completed == "True":
-            task.completed = True
-        else:
-            task.completed = False
+        task.completed = True if completed == "True" else False
 
         return task
 
 
-#  FUNCTIONS , these are the functions that i used for this task manager.
-def add_task(task_list):
-    """Add a new task"""
+#// These are the functions that will make the program run
 
+def add_task(task_list):
     name = input("Enter task name: ")
 
-    # Input validation (complex technique)
     while True:
         priority = input("Enter priority (High/Medium/Low): ")
-
         if priority in ["High", "Medium", "Low"]:
             break
         else:
@@ -45,16 +37,11 @@ def add_task(task_list):
 
     due_date = input("Enter due date: ")
 
-    new_task = Task(name, priority, due_date)
-
-    task_list.append(new_task)
-
+    task_list.append(Task(name, priority, due_date))
     print("Task added successfully")
 
 
 def show_tasks(task_list):
-    """Display all tasks"""
-
     if len(task_list) == 0:
         print("No tasks found")
         return
@@ -62,7 +49,6 @@ def show_tasks(task_list):
     count = 1
 
     for task in task_list:
-
         status = "Completed" if task.completed else "Not completed"
 
         print(f"{count}. {task.name}")
@@ -74,21 +60,16 @@ def show_tasks(task_list):
 
 
 def save_tasks(task_list):
-    """Save tasks to file"""
-
     file = open("tasks.txt", "w")
 
     for task in task_list:
         file.write(task.to_file() + "\n")
 
     file.close()
-
     print("Tasks saved")
 
 
 def load_tasks():
-    """Load tasks from file"""
-
     task_list = []
 
     try:
@@ -106,8 +87,6 @@ def load_tasks():
 
 
 def complete_task(task_list):
-    """Mark task complete"""
-
     show_tasks(task_list)
 
     if len(task_list) == 0:
@@ -117,11 +96,27 @@ def complete_task(task_list):
         choice = int(input("Enter task number: "))
 
         if 1 <= choice <= len(task_list):
-
-            task_list[choice-1].mark_completed()
-
+            task_list[choice - 1].mark_completed()
             print("Task completed")
+        else:
+            print("Invalid number")
 
+    except ValueError:
+        print("Enter a number only")
+
+
+def delete_task(task_list):
+    show_tasks(task_list)
+
+    if len(task_list) == 0:
+        return
+
+    try:
+        choice = int(input("Enter task number to delete: "))
+
+        if 1 <= choice <= len(task_list):
+            removed = task_list.pop(choice - 1)
+            print(f"{removed.name} deleted successfully")
         else:
             print("Invalid number")
 
@@ -143,8 +138,9 @@ def main():
         print("3. Complete task")
         print("4. Save tasks")
         print("5. Exit")
+        print("6. Delete task")
 
-        choice = input("Choose option: ")
+        choice = input("Choose option: ").strip()
 
         if choice == "1":
             add_task(task_list)
@@ -158,6 +154,9 @@ def main():
         elif choice == "4":
             save_tasks(task_list)
 
+        elif choice == "6":
+            delete_task(task_list)
+
         elif choice == "5":
             save_tasks(task_list)
             print("Goodbye")
@@ -167,5 +166,6 @@ def main():
             print("Invalid choice")
 
 
-# Run program
+#// this now runs the program
+
 main()

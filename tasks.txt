@@ -1,4 +1,6 @@
-stats|Medium|in two days |True
-po|Low|tme|False
+po|Low|tme|True
 school homework|Medium|tommorrow|False
 pro|Medium|tmr|True
+math report|High|tommorrowq|False
+math|Low|tmr|False
+math homework|High|nextweek|False
